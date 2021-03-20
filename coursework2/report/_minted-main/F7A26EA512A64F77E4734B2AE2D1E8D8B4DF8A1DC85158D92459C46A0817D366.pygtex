@@ -1,0 +1,65 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{import} \PYG{n+nn}{numpy} \PYG{k}{as} \PYG{n+nn}{np}
+
+
+\PYG{k}{def} \PYG{n+nf}{wiener\PYGZus{}diffusion}\PYG{p}{(}\PYG{n}{W\PYGZus{}t\PYGZus{}old}\PYG{p}{,} \PYG{n}{drift\PYGZus{}rate\PYGZus{}mean}\PYG{p}{,} \PYG{n}{drift\PYGZus{}rate\PYGZus{}variance}\PYG{p}{,} \PYG{n}{time\PYGZus{}step}\PYG{p}{):}
+    \PYG{k}{return} \PYG{p}{(}
+        \PYG{n}{W\PYGZus{}t\PYGZus{}old}
+        \PYG{o}{+} \PYG{p}{(}\PYG{n}{drift\PYGZus{}rate\PYGZus{}mean} \PYG{o}{*} \PYG{n}{time\PYGZus{}step}\PYG{p}{)}
+        \PYG{o}{+} \PYG{p}{(}\PYG{n}{drift\PYGZus{}rate\PYGZus{}variance} \PYG{o}{*} \PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{random}\PYG{o}{.}\PYG{n}{normal}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{np}\PYG{o}{.}\PYG{n}{sqrt}\PYG{p}{(}\PYG{n}{time\PYGZus{}step}\PYG{p}{),} \PYG{l+m+mi}{1}\PYG{p}{)))}  \PYG{c+c1}{\PYGZsh{} type: ignore}
+    \PYG{p}{)}
+
+
+\PYG{k}{def} \PYG{n+nf}{simulate}\PYG{p}{(}
+    \PYG{n}{time\PYGZus{}step}\PYG{p}{,}
+    \PYG{n}{starting\PYGZus{}point}\PYG{p}{,}
+    \PYG{n}{drift\PYGZus{}rate\PYGZus{}mean}\PYG{p}{,}
+    \PYG{n}{drift\PYGZus{}rate\PYGZus{}variance}\PYG{p}{,}
+    \PYG{n}{boundary\PYGZus{}separation}\PYG{p}{,}
+    \PYG{n}{max\PYGZus{}steps}\PYG{o}{=}\PYG{l+m+mi}{2000}\PYG{p}{,}
+\PYG{p}{):}
+
+    \PYG{n}{W\PYGZus{}t} \PYG{o}{=} \PYG{p}{[]}
+    \PYG{n}{W\PYGZus{}t}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{starting\PYGZus{}point}\PYG{p}{)}
+
+    \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{max\PYGZus{}steps} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{):}
+        \PYG{n}{W\PYGZus{}t}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}
+            \PYG{n}{wiener\PYGZus{}diffusion}\PYG{p}{(}
+                \PYG{n}{W\PYGZus{}t\PYGZus{}old}\PYG{o}{=}\PYG{n}{W\PYGZus{}t}\PYG{p}{[}\PYG{n}{i}\PYG{p}{],}
+                \PYG{n}{drift\PYGZus{}rate\PYGZus{}mean}\PYG{o}{=}\PYG{n}{drift\PYGZus{}rate\PYGZus{}mean}\PYG{p}{,}
+                \PYG{n}{drift\PYGZus{}rate\PYGZus{}variance}\PYG{o}{=}\PYG{n}{drift\PYGZus{}rate\PYGZus{}variance}\PYG{p}{,}
+                \PYG{n}{time\PYGZus{}step}\PYG{o}{=}\PYG{n}{time\PYGZus{}step}\PYG{p}{,}
+            \PYG{p}{)}
+        \PYG{p}{)}
+        \PYG{k}{if} \PYG{n}{W\PYGZus{}t}\PYG{p}{[}\PYG{n}{i} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{\PYGZlt{}} \PYG{l+m+mi}{0}\PYG{p}{:}
+            \PYG{k}{return} \PYG{l+s+s2}{\PYGZdq{}h\PYGZus{}neg\PYGZdq{}}\PYG{p}{,} \PYG{n}{W\PYGZus{}t}
+        \PYG{k}{elif} \PYG{n}{W\PYGZus{}t}\PYG{p}{[}\PYG{n}{i} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{\PYGZgt{}} \PYG{n}{boundary\PYGZus{}separation}\PYG{p}{:}
+            \PYG{k}{return} \PYG{l+s+s2}{\PYGZdq{}h\PYGZus{}pos\PYGZdq{}}\PYG{p}{,} \PYG{n}{W\PYGZus{}t}
+
+    \PYG{k}{return} \PYG{l+s+s2}{\PYGZdq{}\PYGZdq{}}\PYG{p}{,} \PYG{n}{W\PYGZus{}t}
+
+
+\PYG{k}{def} \PYG{n+nf}{simulate\PYGZus{}many}\PYG{p}{(}
+    \PYG{n}{num\PYGZus{}simulations}\PYG{p}{,}
+    \PYG{n}{time\PYGZus{}step}\PYG{p}{,}
+    \PYG{n}{starting\PYGZus{}point}\PYG{p}{,}
+    \PYG{n}{drift\PYGZus{}rate\PYGZus{}mean}\PYG{p}{,}
+    \PYG{n}{drift\PYGZus{}rate\PYGZus{}variance}\PYG{p}{,}
+    \PYG{n}{boundary\PYGZus{}separation}\PYG{p}{,}
+    \PYG{n}{max\PYGZus{}steps}\PYG{o}{=}\PYG{l+m+mi}{2000}\PYG{p}{,}
+\PYG{p}{):}
+    \PYG{n}{results} \PYG{o}{=} \PYG{p}{[]}
+    \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{num\PYGZus{}simulations}\PYG{p}{):}
+        \PYG{n}{hypothesis}\PYG{p}{,} \PYG{n}{W\PYGZus{}t} \PYG{o}{=} \PYG{n}{simulate}\PYG{p}{(}
+            \PYG{n}{time\PYGZus{}step}\PYG{o}{=}\PYG{n}{time\PYGZus{}step}\PYG{p}{,}
+            \PYG{n}{starting\PYGZus{}point}\PYG{o}{=}\PYG{n}{starting\PYGZus{}point}\PYG{p}{,}
+            \PYG{n}{drift\PYGZus{}rate\PYGZus{}mean}\PYG{o}{=}\PYG{n}{drift\PYGZus{}rate\PYGZus{}mean}\PYG{p}{,}
+            \PYG{n}{drift\PYGZus{}rate\PYGZus{}variance}\PYG{o}{=}\PYG{n}{drift\PYGZus{}rate\PYGZus{}variance}\PYG{p}{,}
+            \PYG{n}{boundary\PYGZus{}separation}\PYG{o}{=}\PYG{n}{boundary\PYGZus{}separation}\PYG{p}{,}
+            \PYG{n}{max\PYGZus{}steps}\PYG{o}{=}\PYG{n}{max\PYGZus{}steps}\PYG{p}{,}
+        \PYG{p}{)}
+
+        \PYG{n}{results}\PYG{o}{.}\PYG{n}{append}\PYG{p}{((}\PYG{n}{hypothesis}\PYG{p}{,} \PYG{n}{W\PYGZus{}t}\PYG{p}{))}
+
+    \PYG{k}{return} \PYG{n}{results}
+\end{Verbatim}
