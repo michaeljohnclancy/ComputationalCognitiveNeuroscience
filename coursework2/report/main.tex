@@ -172,7 +172,7 @@ The negative log likelihood for the second participant is 96.256. Listing \ref{l
 
 \subsection{Task (e): Model fitting (7)}
 
-The following parameter optimizations were performed using the Nelder-Mead method.
+The following parameter optimizations were performed using the Nelder-Mead method. (Although the coursework specifies a gradient-based method must be used, this question was raised on piazza, and the Instructor response suggested Nelder-Mead was appropriate).
 
 \begin{table}[H]
   \centering
@@ -182,8 +182,8 @@ The following parameter optimizations were performed using the Nelder-Mead metho
   Learning Rate       & 0.369 &  0.0154  \\
   Inverse Temperature & 5.683 &  1.647    \\ \bottomrule
   \end{tabular}
-  \caption{Mean and variance of fitted parameters over all participants}
-  \label{table:paramaterstatistics}
+  \caption{Mean and variance of estimated parameters over all participants}
+  \label{table:parameterstatistics}
 \end{table}
 
 \begin{figure}[H]
@@ -202,19 +202,112 @@ Pearson's correlation coefficient between estimated parameters among all partici
 
 \subsection{Task (f): Group Comparison (5)}
 
-As the assumption of equal variance cannot be assumed, Welch's t-test is suitable for ascertaining whether the MDD and control groups have significantly different estimated parameter distributions for the reinforcement model. For these samples, we have 53 degrees of freedom. Table \ref{table:ttest} shows the results from said test. We can interpret these results by setting a value for what we can consider 'significant'. In this case 0.05 will be used. We observe that the p-value for the learning rate is above this, in which case we can accept the hypothesis that the two groups have similar distributions. In the case of inverse temperature, we observe a value of 0.049, which suggests that we should reject the hypothesis that the two groups have similar distributions. 
+As the assumption of equal variance cannot be assumed, Welch's t-test is suitable for ascertaining whether the MDD and control groups have significantly different estimated parameter distributions for the reinforcement model. For these samples, we have 53 degrees of freedom. Table \ref{table:ttest} shows the results from this test. We can interpret these results by setting a value for what we can consider 'significant'. In this case 0.05 will be used. We observe that the p-value for the learning rate is above this, in which case we can accept the hypothesis that the two groups have similar distributions. In the case of inverse temperature, we observe a value of 0.049, which suggests that we should reject the hypothesis that the two groups have similar distributions. 
 
 
 \begin{table}[H]
-\begin{tabular}{@{}lll@{}}
-  \toprule
-              & t-statistic & p-value \\ \midrule
-Learning Rate & 0.100       & 0.921   \\
-Inverse Temp. & -2.020      & 0.049   \\ \bottomrule
-\end{tabular}
-\caption{Welch's t-test between the two groups of participants (MDD and control)}
-\label{table:ttest}
+  \centering
+  \begin{tabular}{@{}lll@{}}
+    \toprule
+                & t-statistic & p-value \\ \midrule
+  Learning Rate & 0.100       & 0.921   \\
+  Inverse Temp. & -2.020      & 0.049   \\ \bottomrule
+  \end{tabular}
+  \caption{Welch's t-test between the two groups of participants (MDD and control)}
+  \label{table:ttest}
 \end{table}
+
+\subsection{Task (g): Parameter recovery (8)}
+
+In order to check the reliability of our parameter estimates we check whether we can run a simulation with fixed parameters, then perform the parameter estimation to recover the fixed parameters. Sampling these parameters from a known distribution gives us a better idea of how well parameters can be recovered. Table \ref{table:parameterstatistics} shows the mean and variance of the parameter estimates of all participants, and so we can use these to build a distribution to sample from. Figure \ref{fig:parametergaussian} illustrates this distribution.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{figures/part2/task7/parametergaussian.pdf}
+  \caption{\centering Multivariate gaussian of learning rate and inverse temperature; Modelled with mean and variance found in Table \ref{table:parameterstatistics}}
+  \label{fig:parametergaussian}
+\end{figure}
+
+We see high correlation between the parameters drawn from the sampling gaussian and the parameters recovered via model fitting. Table \ref{table:recoveredcorrelation} shows the results. These high correlations are expected. An illustration of each correlation can be seen in Figure \ref{fig:parametercorrelations}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+                & Correlation \\ \midrule
+  Learning Rate & 0.906       \\
+  Inverse Temp. & 0.795       \\ \bottomrule
+  \end{tabular}
+  \caption{Pearson's correlation coefficients between fitted and simulated parameter values.}
+  \label{table:recoveredcorrelation}
+\end{table}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{figures/part2/task7/parameter_correlations.pdf}
+  \caption{Fitted and simulated parameter values, showing strong correlation}
+  \label{fig:parametercorrelations}
+\end{figure}
+
+The number of trials and number of simulations can be seen to affect the extent of correlation between the fitted and simulated parameter values. Figure \ref{fig:varyingnumtrialsandsimulations} shows that and increase in both of these causes an increase in correlation. The trials were increased in batches of 48, still using the changes in reward probabililties every 24 trials.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{figures/part2/task7/varying_num_trials_and_simulations.pdf}
+  \caption{\centering Varying number of trials and number of simulations, and observing effect on correlation between fitted and simulated parameters}
+  \label{fig:varyingnumtrialsandsimulations}
+\end{figure}
+
+\subsection{Task (h): Alternative models (8)}
+
+Figures \ref{fig:model2parameterestimates} and \ref{fig:model3parameterestimates} show the fitted parameters of each participant, for models 2 and 3 respectively. The results show that model 2 and model 1 are equivalent (identical mean and covariance), yielding the same results. This is not surprising as both the inverse temperature and the reward sensitivity affect the degree to which a reward updates the expectations of the reinforcement model. The introduction of variable initial stimulus value does have an effect on the model. Performing Welch's independent t-test on the MDD and healthy patients model 3 fits shows that the reward sensitivities come from significantly different populations, whilst the other 3 parameters do not hold enough evidence to reject the hypothesis that they are drawn from the same population.
+
+We can say that the inverse temperature has the same effect of reward sensitivity if the initial stimulus values are 0.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{figures/part2/task8/model2_estimated_parameters.pdf}
+  \caption{\centering Model 2 fitted parameters for each individual}
+  \label{fig:model2parameterestimates}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{figures/part2/task8/model3_estimated_parameters.pdf}
+  \caption{\centering Model 3 fitted parameters for each individual}
+  \label{fig:model3parameterestimates}
+\end{figure}
+
+\subsection{Task (i): Model comparison (6)}
+
+Given the discussion had in the previous section, Task (h), it makes sense that model 1 and 2 are equivalent in their total negative log likelihood and therefore in their AIC and BIC. Model 3 can be seen to have a lower AIC and BIC, and so can be regarded as the "best" model.
+\begin{table}[H]
+  \centering
+  \begin{tabular}{@{}llll@{}}
+  \toprule
+          & NLL      & AIC      & BIC      \\ \midrule
+  Model 1 & 4653.841 & 9311.682 & 9318.644 \\
+  Model 2 & 4653.841 & 9311.682 & 9318.644 \\
+  Model 3 & 4557.487 & 9122.974 & 9136.897 \\ \bottomrule
+  \end{tabular}
+  \caption{NLL, AIC and BIC for all models}
+  \label{table:aicbic}
+\end{table}
+
+\subsection{Task (j): Model recovery and confusion matrix (6)}
+
+The following 2 confusion matrices show the goodness of fit for each model, when fitted to simulated data created with each of the models. It is intended to show how well the model's data can be recovered, which in turn suggests how reliable the comparison data in Task (h) is.
+
+For each of the models, parameters were randomly sampled from Gaussians with means and variances disclosed in Table \ref{confmatmeansandvars}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{figures/part2/task10/confusion_matrix.pdf}
+  \caption{AIC and BIC confusion matrices illustrating performance of model fitting with data simulated by all other models}
+  \label{fig:confusionmatrix}
+\end{figure}
+
+\subsection{Task (k): Discussion (14)}
 
 
 % References
@@ -224,6 +317,7 @@ Inverse Temp. & -2.020      & 0.049   \\ \bottomrule
 \begin{appendices}
   
   \begin{table}
+    \centering
     \begin{tabular}{ccc}
       \toprule
       Participant &    Rewards Received &    Times chosen Stimulus B \\

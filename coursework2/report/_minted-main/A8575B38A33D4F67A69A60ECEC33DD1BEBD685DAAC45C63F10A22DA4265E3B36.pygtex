@@ -9,14 +9,14 @@
     \PYG{k}{return} \PYG{n}{current\PYGZus{}stimulus\PYGZus{}value} \PYG{o}{+} \PYG{p}{(}\PYG{n}{learning\PYGZus{}rate} \PYG{o}{*} \PYG{p}{(}\PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{reward\PYGZus{}received}\PYG{p}{)} \PYG{o}{\PYGZhy{}} \PYG{n}{current\PYGZus{}stimulus\PYGZus{}value}\PYG{p}{))}
 
 
-\PYG{k}{def} \PYG{n+nf}{get\PYGZus{}probability\PYGZus{}of\PYGZus{}stimulus\PYGZus{}a}\PYG{p}{(}\PYG{n}{stimulus\PYGZus{}values}\PYG{p}{:} \PYG{n}{Dict}\PYG{p}{[}\PYG{n+nb}{str}\PYG{p}{,} \PYG{n+nb}{float}\PYG{p}{],} \PYG{n}{inverse\PYGZus{}temperature}\PYG{p}{:} \PYG{n+nb}{float}\PYG{p}{):}
-    \PYG{k}{return} \PYG{n}{np}\PYG{o}{.}\PYG{n}{exp}\PYG{p}{(}\PYG{n}{inverse\PYGZus{}temperature} \PYG{o}{*} \PYG{n}{stimulus\PYGZus{}values}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}A\PYGZsq{}}\PYG{p}{])} \PYGZbs{}
-           \PYG{o}{/} \PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{exp}\PYG{p}{(}\PYG{n}{inverse\PYGZus{}temperature} \PYG{o}{*} \PYG{n}{stimulus\PYGZus{}values}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}A\PYGZsq{}}\PYG{p}{])} \PYG{o}{+} \PYG{n}{np}\PYG{o}{.}\PYG{n}{exp}\PYG{p}{(}\PYG{n}{inverse\PYGZus{}temperature} \PYG{o}{*} \PYG{n}{stimulus\PYGZus{}values}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}B\PYGZsq{}}\PYG{p}{]))}
+\PYG{k}{def} \PYG{n+nf}{get\PYGZus{}probability\PYGZus{}of\PYGZus{}stimulus\PYGZus{}a}\PYG{p}{(}\PYG{n}{stimulus\PYGZus{}values}\PYG{p}{:} \PYG{n}{Dict}\PYG{p}{[}\PYG{n+nb}{int}\PYG{p}{,} \PYG{n+nb}{float}\PYG{p}{],} \PYG{n}{inverse\PYGZus{}temperature}\PYG{p}{:} \PYG{n+nb}{float}\PYG{p}{):}
+    \PYG{k}{return} \PYG{n}{np}\PYG{o}{.}\PYG{n}{exp}\PYG{p}{(}\PYG{n}{inverse\PYGZus{}temperature} \PYG{o}{*} \PYG{n}{stimulus\PYGZus{}values}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{])} \PYGZbs{}
+           \PYG{o}{/} \PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{exp}\PYG{p}{(}\PYG{n}{inverse\PYGZus{}temperature} \PYG{o}{*} \PYG{n}{stimulus\PYGZus{}values}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{])} \PYG{o}{+} \PYG{n}{np}\PYG{o}{.}\PYG{n}{exp}\PYG{p}{(}\PYG{n}{inverse\PYGZus{}temperature} \PYG{o}{*} \PYG{n}{stimulus\PYGZus{}values}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{]))}
 
 
-\PYG{k}{def} \PYG{n+nf}{simulate\PYGZus{}single\PYGZus{}trial}\PYG{p}{(}\PYG{n}{stimulus\PYGZus{}values}\PYG{p}{:} \PYG{n}{Dict}\PYG{p}{[}\PYG{n+nb}{str}\PYG{p}{,} \PYG{n+nb}{float}\PYG{p}{],} \PYG{n}{reward\PYGZus{}probabilities}\PYG{p}{:} \PYG{n}{Dict}\PYG{p}{[}\PYG{n+nb}{str}\PYG{p}{,} \PYG{n+nb}{float}\PYG{p}{],} \PYG{n}{learning\PYGZus{}rate}\PYG{p}{:} \PYG{n+nb}{float}\PYG{p}{,} \PYG{n}{inverse\PYGZus{}temperature}\PYG{p}{:} \PYG{n+nb}{float}\PYG{p}{):}
+\PYG{k}{def} \PYG{n+nf}{simulate\PYGZus{}single\PYGZus{}trial}\PYG{p}{(}\PYG{n}{stimulus\PYGZus{}values}\PYG{p}{:} \PYG{n}{Dict}\PYG{p}{[}\PYG{n+nb}{int}\PYG{p}{,} \PYG{n+nb}{float}\PYG{p}{],} \PYG{n}{reward\PYGZus{}probabilities}\PYG{p}{:} \PYG{n}{Dict}\PYG{p}{[}\PYG{n+nb}{int}\PYG{p}{,} \PYG{n+nb}{float}\PYG{p}{],} \PYG{n}{learning\PYGZus{}rate}\PYG{p}{:} \PYG{n+nb}{float}\PYG{p}{,} \PYG{n}{inverse\PYGZus{}temperature}\PYG{p}{:} \PYG{n+nb}{float}\PYG{p}{):}
     \PYG{n}{prob\PYGZus{}a} \PYG{o}{=} \PYG{n}{get\PYGZus{}probability\PYGZus{}of\PYGZus{}stimulus\PYGZus{}a}\PYG{p}{(}\PYG{n}{stimulus\PYGZus{}values}\PYG{p}{,} \PYG{n}{inverse\PYGZus{}temperature}\PYG{o}{=}\PYG{n}{inverse\PYGZus{}temperature}\PYG{p}{)}
-    \PYG{n}{choice} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{random}\PYG{o}{.}\PYG{n}{choice}\PYG{p}{([}\PYG{l+s+s1}{\PYGZsq{}A\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}B\PYGZsq{}}\PYG{p}{],} \PYG{n}{p}\PYG{o}{=}\PYG{p}{(}\PYG{n}{prob\PYGZus{}a}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{o}{\PYGZhy{}}\PYG{n}{prob\PYGZus{}a}\PYG{p}{))}
+    \PYG{n}{choice} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{random}\PYG{o}{.}\PYG{n}{choice}\PYG{p}{([}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{],} \PYG{n}{p}\PYG{o}{=}\PYG{p}{(}\PYG{n}{prob\PYGZus{}a}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{o}{\PYGZhy{}}\PYG{n}{prob\PYGZus{}a}\PYG{p}{))}
 
     \PYG{n}{reward\PYGZus{}received} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{random}\PYG{o}{.}\PYG{n}{choice}\PYG{p}{([}\PYG{k+kc}{True}\PYG{p}{,} \PYG{k+kc}{False}\PYG{p}{],}
                                        \PYG{n}{p}\PYG{o}{=}\PYG{p}{(}\PYG{n}{reward\PYGZus{}probabilities}\PYG{p}{[}\PYG{n}{choice}\PYG{p}{],}
@@ -29,16 +29,16 @@
     \PYG{k}{return} \PYG{n}{stimulus\PYGZus{}values}\PYG{p}{,} \PYG{n}{choice}\PYG{p}{,} \PYG{n}{reward\PYGZus{}received}
 
 
-\PYG{k}{def} \PYG{n+nf}{simulate\PYGZus{}trials}\PYG{p}{(}\PYG{n}{learning\PYGZus{}rate}\PYG{p}{:} \PYG{n+nb}{float}\PYG{p}{,} \PYG{n}{inverse\PYGZus{}temperature}\PYG{p}{:} \PYG{n+nb}{float}\PYG{p}{)} \PYG{o}{\PYGZhy{}\PYGZgt{}} \PYG{n}{Tuple}\PYG{p}{[}\PYG{n}{pd}\PYG{o}{.}\PYG{n}{DataFrame}\PYG{p}{,} \PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{,} \PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{]:}
-    \PYG{n}{reward\PYGZus{}probabilities\PYGZus{}1} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}A\PYGZsq{}}\PYG{p}{:} \PYG{l+m+mf}{0.4}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}B\PYGZsq{}}\PYG{p}{:} \PYG{l+m+mf}{0.85}\PYG{p}{\PYGZcb{}}
-    \PYG{n}{reward\PYGZus{}probabilities\PYGZus{}2} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}A\PYGZsq{}}\PYG{p}{:} \PYG{l+m+mf}{0.65}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}B\PYGZsq{}}\PYG{p}{:} \PYG{l+m+mf}{0.30}\PYG{p}{\PYGZcb{}}
+\PYG{k}{def} \PYG{n+nf}{simulate\PYGZus{}trials}\PYG{p}{(}\PYG{n}{learning\PYGZus{}rate}\PYG{p}{:} \PYG{n+nb}{float}\PYG{p}{,} \PYG{n}{inverse\PYGZus{}temperature}\PYG{p}{:} \PYG{n+nb}{float}\PYG{p}{,} \PYG{n}{num\PYGZus{}48\PYGZus{}trial\PYGZus{}batches}\PYG{o}{=}\PYG{l+m+mi}{5}\PYG{p}{)} \PYG{o}{\PYGZhy{}\PYGZgt{}} \PYG{n}{Tuple}\PYG{p}{[}\PYG{n}{pd}\PYG{o}{.}\PYG{n}{DataFrame}\PYG{p}{,} \PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{,} \PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{]:}
+    \PYG{n}{reward\PYGZus{}probabilities\PYGZus{}1} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{l+m+mi}{1}\PYG{p}{:} \PYG{l+m+mf}{0.4}\PYG{p}{,} \PYG{l+m+mi}{2}\PYG{p}{:} \PYG{l+m+mf}{0.85}\PYG{p}{\PYGZcb{}}
+    \PYG{n}{reward\PYGZus{}probabilities\PYGZus{}2} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{l+m+mi}{1}\PYG{p}{:} \PYG{l+m+mf}{0.65}\PYG{p}{,} \PYG{l+m+mi}{2}\PYG{p}{:} \PYG{l+m+mf}{0.30}\PYG{p}{\PYGZcb{}}
 
-    \PYG{n}{stimulus\PYGZus{}values} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}A\PYGZsq{}}\PYG{p}{:} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}B\PYGZsq{}}\PYG{p}{:} \PYG{l+m+mi}{0}\PYG{p}{\PYGZcb{}}
+    \PYG{n}{stimulus\PYGZus{}values} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{l+m+mi}{1}\PYG{p}{:} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{2}\PYG{p}{:} \PYG{l+m+mi}{0}\PYG{p}{\PYGZcb{}}
 
     \PYG{n}{all\PYGZus{}choices} \PYG{o}{=} \PYG{p}{[]}
     \PYG{n}{all\PYGZus{}reward\PYGZus{}received} \PYG{o}{=} \PYG{p}{[]}
     \PYG{n}{all\PYGZus{}stimulus\PYGZus{}values} \PYG{o}{=} \PYG{p}{[]}
-    \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{5}\PYG{p}{):}
+    \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{num\PYGZus{}48\PYGZus{}trial\PYGZus{}batches}\PYG{p}{):}
         \PYG{k}{for} \PYG{n}{\PYGZus{}} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{24}\PYG{p}{):}
             \PYG{n}{stimulus\PYGZus{}values}\PYG{p}{,} \PYG{n}{choice}\PYG{p}{,} \PYG{n}{reward\PYGZus{}received} \PYG{o}{=} \PYG{n}{simulate\PYGZus{}single\PYGZus{}trial}\PYG{p}{(}\PYG{n}{stimulus\PYGZus{}values}\PYG{p}{,} \PYG{n}{reward\PYGZus{}probabilities\PYGZus{}1}\PYG{p}{,} \PYG{n}{learning\PYGZus{}rate}\PYG{p}{,} \PYG{n}{inverse\PYGZus{}temperature}\PYG{p}{)}
             \PYG{n}{all\PYGZus{}choices}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{choice}\PYG{p}{)}
@@ -67,10 +67,9 @@
         \PYG{n}{V}\PYG{p}{[}\PYG{n}{choice\PYGZus{}index}\PYG{p}{]} \PYG{o}{+=} \PYG{p}{(}\PYG{n}{learning\PYGZus{}rate} \PYG{o}{*} \PYG{p}{(}\PYG{n}{rewards\PYGZus{}received}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{\PYGZhy{}} \PYG{n}{V}\PYG{p}{[}\PYG{n}{choice\PYGZus{}index}\PYG{p}{]))}
     \PYG{k}{return} \PYG{o}{\PYGZhy{}}\PYG{n}{np}\PYG{o}{.}\PYG{n}{sum}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{log}\PYG{p}{(}\PYG{n}{choice\PYGZus{}probabilities}\PYG{p}{))}
 
-\PYG{k}{def} \PYG{n+nf}{get\PYGZus{}total\PYGZus{}negative\PYGZus{}log\PYGZus{}likelihood}\PYG{p}{(}\PYG{n}{parameters}\PYG{p}{:} \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{):}
-    \PYG{n}{choices} \PYG{o}{=} \PYG{n}{pd}\PYG{o}{.}\PYG{n}{read\PYGZus{}csv}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}data/choices.csv\PYGZsq{}}\PYG{p}{,} \PYG{n}{header}\PYG{o}{=}\PYG{k+kc}{None}\PYG{p}{)}
-    \PYG{n}{rewards} \PYG{o}{=} \PYG{n}{pd}\PYG{o}{.}\PYG{n}{read\PYGZus{}csv}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}data/rewards.csv\PYGZsq{}}\PYG{p}{,} \PYG{n}{header}\PYG{o}{=}\PYG{k+kc}{None}\PYG{p}{)}
-    \PYG{k}{return} \PYG{n+nb}{sum}\PYG{p}{(}\PYG{n}{get\PYGZus{}negative\PYGZus{}log\PYGZus{}likelihood}\PYG{p}{(}\PYG{n}{parameters}\PYG{o}{=}\PYG{n}{parameters}\PYG{p}{,} \PYG{n}{choices}\PYG{o}{=}\PYG{n}{choices}\PYG{o}{.}\PYG{n}{iloc}\PYG{p}{[}\PYG{n}{i}\PYG{p}{],} \PYG{n}{rewards\PYGZus{}received}\PYG{o}{=}\PYG{n}{rewards}\PYG{o}{.}\PYG{n}{iloc}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])} \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{choices}\PYG{o}{.}\PYG{n}{shape}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]))}
+
+\PYG{k}{def} \PYG{n+nf}{get\PYGZus{}total\PYGZus{}negative\PYGZus{}log\PYGZus{}likelihood}\PYG{p}{(}\PYG{n}{parameters}\PYG{p}{:} \PYG{n}{pd}\PYG{o}{.}\PYG{n}{DataFrame}\PYG{p}{,} \PYG{n}{choices}\PYG{o}{=}\PYG{n}{pd}\PYG{o}{.}\PYG{n}{read\PYGZus{}csv}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}data/choices.csv\PYGZsq{}}\PYG{p}{,} \PYG{n}{header}\PYG{o}{=}\PYG{k+kc}{None}\PYG{p}{),} \PYG{n}{rewards}\PYG{o}{=}\PYG{n}{pd}\PYG{o}{.}\PYG{n}{read\PYGZus{}csv}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}data/rewards.csv\PYGZsq{}}\PYG{p}{,} \PYG{n}{header}\PYG{o}{=}\PYG{k+kc}{None}\PYG{p}{)):}
+    \PYG{k}{return} \PYG{n+nb}{sum}\PYG{p}{(}\PYG{n}{get\PYGZus{}negative\PYGZus{}log\PYGZus{}likelihood}\PYG{p}{(}\PYG{n}{parameters}\PYG{o}{=}\PYG{n}{parameters}\PYG{p}{[}\PYG{n}{i}\PYG{p}{],} \PYG{n}{choices}\PYG{o}{=}\PYG{n}{choices}\PYG{o}{.}\PYG{n}{iloc}\PYG{p}{[}\PYG{n}{i}\PYG{p}{],} \PYG{n}{rewards\PYGZus{}received}\PYG{o}{=}\PYG{n}{rewards}\PYG{o}{.}\PYG{n}{iloc}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])} \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{choices}\PYG{o}{.}\PYG{n}{shape}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]))}
 
 
 \PYG{k}{def} \PYG{n+nf}{get\PYGZus{}individual\PYGZus{}parameter\PYGZus{}estimates}\PYG{p}{(}\PYG{n}{choices}\PYG{p}{,} \PYG{n}{rewards}\PYG{p}{,} \PYG{n}{initial\PYGZus{}parameters}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{([}\PYG{l+m+mf}{0.5}\PYG{p}{,} \PYG{l+m+mi}{5}\PYG{p}{])):}
@@ -80,4 +79,29 @@
             \PYG{n}{minimize}\PYG{p}{(}\PYG{n}{get\PYGZus{}negative\PYGZus{}log\PYGZus{}likelihood}\PYG{p}{,} \PYG{n}{method}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}Nelder\PYGZhy{}Mead\PYGZdq{}}\PYG{p}{,} \PYG{n}{x0}\PYG{o}{=}\PYG{n}{initial\PYGZus{}parameters}\PYG{p}{,} \PYG{n}{args}\PYG{o}{=}\PYG{p}{(}\PYG{n}{choices}\PYG{o}{.}\PYG{n}{iloc}\PYG{p}{[}\PYG{n}{i}\PYG{p}{],} \PYG{n}{rewards}\PYG{o}{.}\PYG{n}{iloc}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]))}\PYG{o}{.}\PYG{n}{x}\PYG{p}{)}
 
     \PYG{k}{return} \PYG{n}{pd}\PYG{o}{.}\PYG{n}{DataFrame}\PYG{p}{(}\PYG{n}{optimal\PYGZus{}params\PYGZus{}list}\PYG{p}{,} \PYG{n}{columns}\PYG{o}{=}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}learning\PYGZus{}rate\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}inverse\PYGZus{}temperature\PYGZsq{}}\PYG{p}{])}
+
+
+\PYG{k}{def} \PYG{n+nf}{get\PYGZus{}parameter\PYGZus{}recovery\PYGZus{}correlation}\PYG{p}{(}\PYG{n}{num\PYGZus{}48\PYGZus{}trial\PYGZus{}batches}\PYG{o}{=}\PYG{l+m+mi}{5}\PYG{p}{,} \PYG{n}{num\PYGZus{}simulations}\PYG{o}{=}\PYG{l+m+mi}{55}\PYG{p}{):}
+    \PYG{n}{mean} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{([}\PYG{l+m+mf}{0.369}\PYG{p}{,} \PYG{l+m+mf}{5.683}\PYG{p}{])}
+    \PYG{n}{covariance} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{([[}\PYG{l+m+mf}{0.0154}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{],} \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mf}{1.647}\PYG{p}{]])}
+    \PYG{n}{parameter\PYGZus{}sets} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{random}\PYG{o}{.}\PYG{n}{multivariate\PYGZus{}normal}\PYG{p}{(}\PYG{n}{mean}\PYG{p}{,} \PYG{n}{covariance}\PYG{p}{,} \PYG{n}{num\PYGZus{}simulations}\PYG{p}{)}
+
+    \PYG{n}{all\PYGZus{}choices} \PYG{o}{=} \PYG{p}{[]}
+    \PYG{n}{all\PYGZus{}reward\PYGZus{}received} \PYG{o}{=} \PYG{p}{[]}
+    \PYG{k}{for} \PYG{n}{learning\PYGZus{}rate}\PYG{p}{,} \PYG{n}{inverse\PYGZus{}temperature} \PYG{o+ow}{in} \PYG{n}{parameter\PYGZus{}sets}\PYG{p}{:}
+        \PYG{n}{stimulus\PYGZus{}values}\PYG{p}{,} \PYG{n}{choices}\PYG{p}{,} \PYG{n}{reward\PYGZus{}received} \PYG{o}{=} \PYG{n}{simulate\PYGZus{}trials}\PYG{p}{(}
+            \PYG{n}{learning\PYGZus{}rate}\PYG{o}{=}\PYG{n}{learning\PYGZus{}rate}\PYG{p}{,}
+            \PYG{n}{inverse\PYGZus{}temperature}\PYG{o}{=}\PYG{n}{inverse\PYGZus{}temperature}\PYG{p}{,}
+            \PYG{n}{num\PYGZus{}48\PYGZus{}trial\PYGZus{}batches}\PYG{o}{=}\PYG{n}{num\PYGZus{}48\PYGZus{}trial\PYGZus{}batches}
+        \PYG{p}{)}
+        \PYG{n}{all\PYGZus{}choices}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{choices}\PYG{p}{)}
+        \PYG{n}{all\PYGZus{}reward\PYGZus{}received}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{reward\PYGZus{}received}\PYG{p}{)}
+
+    \PYG{n}{all\PYGZus{}choices} \PYG{o}{=} \PYG{n}{pd}\PYG{o}{.}\PYG{n}{DataFrame}\PYG{p}{(}\PYG{n}{all\PYGZus{}choices}\PYG{p}{)}
+    \PYG{n}{all\PYGZus{}reward\PYGZus{}received} \PYG{o}{=} \PYG{n}{pd}\PYG{o}{.}\PYG{n}{DataFrame}\PYG{p}{(}\PYG{n}{all\PYGZus{}reward\PYGZus{}received}\PYG{p}{)}
+    \PYG{n}{recovered\PYGZus{}parameter\PYGZus{}estimates} \PYG{o}{=} \PYG{n}{get\PYGZus{}individual\PYGZus{}parameter\PYGZus{}estimates}\PYG{p}{(}\PYG{n}{all\PYGZus{}choices}\PYG{p}{,} \PYG{n}{all\PYGZus{}reward\PYGZus{}received}\PYG{p}{)}
+
+    \PYG{n}{fixed\PYGZus{}parameters} \PYG{o}{=} \PYG{n}{pd}\PYG{o}{.}\PYG{n}{DataFrame}\PYG{p}{(}\PYG{n}{parameter\PYGZus{}sets}\PYG{p}{,} \PYG{n}{columns}\PYG{o}{=}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}learning\PYGZus{}rate\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}inverse\PYGZus{}temperature\PYGZsq{}}\PYG{p}{])}
+
+    \PYG{k}{return} \PYG{n}{fixed\PYGZus{}parameters}\PYG{o}{.}\PYG{n}{corrwith}\PYG{p}{(}\PYG{n}{recovered\PYGZus{}parameter\PYGZus{}estimates}\PYG{p}{)}
 \end{Verbatim}
